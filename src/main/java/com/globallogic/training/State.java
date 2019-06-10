@@ -3,10 +3,15 @@ package com.globallogic.training;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class State {
+public class State implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private Language language;
 
     private Set<String> alreadyUsedWords = new HashSet<String>();
     private Set<String> dictionaryWords = new HashSet<String>();
@@ -19,6 +24,14 @@ public class State {
         while ((line = reader.readLine()) != null) {
             dictionaryWords.add(line);
         }
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public Set<String> getAlreadyUsedWords() {
