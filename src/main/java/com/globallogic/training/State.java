@@ -1,11 +1,12 @@
 package com.globallogic.training;
 
+import com.globallogic.training.users.User;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class State implements Serializable {
 
@@ -13,8 +14,9 @@ public class State implements Serializable {
 
     private Language language;
 
-    private Set<String> alreadyUsedWords = new HashSet<String>();
+    private LinkedHashSet<String> alreadyUsedWords = new LinkedHashSet<>();
     private Set<String> dictionaryWords = new HashSet<String>();
+    private List<User> usersChain = new ArrayList<>();
 
     public void loadWords(Language language) throws IOException {
         String fileName = language == Language.EN ? "en.txt" : "ru.txt";
@@ -34,11 +36,11 @@ public class State implements Serializable {
         this.language = language;
     }
 
-    public Set<String> getAlreadyUsedWords() {
+    public LinkedHashSet<String> getAlreadyUsedWords() {
         return alreadyUsedWords;
     }
 
-    public void setAlreadyUsedWords(Set<String> alreadyUsedWords) {
+    public void setAlreadyUsedWords(LinkedHashSet<String> alreadyUsedWords) {
         this.alreadyUsedWords = alreadyUsedWords;
     }
 
@@ -48,5 +50,13 @@ public class State implements Serializable {
 
     public void setDictionaryWords(Set<String> dictionaryWords) {
         this.dictionaryWords = dictionaryWords;
+    }
+
+    public List<User> getUsersChain() {
+        return usersChain;
+    }
+
+    public void setUsersChain(List<User> usersChain) {
+        this.usersChain = usersChain;
     }
 }

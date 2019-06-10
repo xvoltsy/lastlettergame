@@ -13,7 +13,9 @@ public class CommonValidator implements Validator {
 
     @Override
     public String validate(String word, String previousWord) {
-
+        if (word.equals(Consts.EMPTY)) {
+            return word;
+        }
         String validation = gameValidation(word, previousWord);
         if (validation.isEmpty()) {
             validation = dictionaryValidation(word);
@@ -24,7 +26,7 @@ public class CommonValidator implements Validator {
     }
 
     private String gameValidation(String word, String previousWord) {
-        char lastChar = previousWord.charAt(previousWord.chars().sum() - 1);
+        char lastChar = previousWord.charAt(previousWord.length() - 1);
         return word.charAt(0) != lastChar ? "The word does not begin with a letter " + lastChar : Consts.EMPTY;
     }
 

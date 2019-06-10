@@ -1,6 +1,12 @@
 package com.globallogic.training.users;
 
-public interface User {
+import java.io.Serializable;
+
+public interface User extends Serializable {
+
+    boolean isRepliedLast();
+
+    void setRepliedLast(boolean repliedLast);
 
     String respond(String previousWord);
 

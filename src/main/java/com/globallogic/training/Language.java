@@ -1,5 +1,7 @@
 package com.globallogic.training;
 
-public enum Language {
+import java.io.Serializable;
+
+public enum Language implements Serializable {
     EN, RU, NONE
 }

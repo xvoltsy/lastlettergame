@@ -20,13 +20,4 @@
         </plugins>
     </build>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>org.dbpedia.extraction</groupId>
-            <artifactId>wiktionary</artifactId>
-            <version>4.1</version>
-        </dependency>
-    </dependencies>
-
 </project>

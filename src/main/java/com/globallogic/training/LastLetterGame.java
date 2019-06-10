@@ -5,21 +5,27 @@ import com.globallogic.training.helper.StateHelper;
 import com.globallogic.training.users.Bot;
 import com.globallogic.training.users.User;
 import com.globallogic.training.users.UserImpl;
+import com.globallogic.training.validator.CommonValidator;
+import com.globallogic.training.validator.Validator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.*;
 
 public class LastLetterGame {
 
     private static Language LANGUAGE = Language.NONE;
+
+    private static boolean isResponseOk;
+    private static State state;
 
     public static void main(String[] args) {
         System.out.println("GAME STARTED!");
         System.out.println();
         System.out.println("Please select Language of the game: EN or RU ?");
 
-        State state = StateHelper.fetchState();
+        state = StateHelper.fetchState();
 
 
         if (state == null) {
@@ -49,24 +55,72 @@ public class LastLetterGame {
                 state.setLanguage(LANGUAGE);
                 state.loadWords(LANGUAGE);
 
+                Validator validator = new CommonValidator(state);
+
+
                 User user = new UserImpl();
-                User bot = new Bot();
+                User bot = new Bot(state);
+                List<User> usersChain = state.getUsersChain();
+                usersChain.add(user);
+                usersChain.add(bot);
 
-                while (true) {
-                    String word = ConsoleHelper.readWord();
+                String word = "";
+                String previousWord = "";
+                LinkedHashSet<String> alreadyUsedWords = state.getAlreadyUsedWords();
 
 
+                for (int i = 0; i < usersChain.size(); i++) {
+                    isResponseOk = false;
+                    User currentUser = usersChain.get(i);
+                    while (!isResponseOk) {
+                        if (alreadyUsedWords.isEmpty()) {
+                            word = currentUser.respond("");
+                            if (currentUser.isResponseCorrect(word)) {
+                                saveState(word, currentUser);
+                            } else {
+                                ConsoleHelper.writeMessage("The word is not correct. Please try again!");
+                            }
+                        } else {
+                            previousWord = (String) alreadyUsedWords.toArray()[alreadyUsedWords.size() - 1];
+                            word = currentUser.respond(word);
+                            if (!currentUser.isResponseCorrect(word)) {
+                                ConsoleHelper.writeMessage("The word is not correct. Please try again!");
+                                continue;
+                            }
+
+                            String validationMessage = validator.validate(word, previousWord);
+                            if (!validationMessage.isEmpty()) {
+                                ConsoleHelper.writeMessage(validationMessage);
+                            } else {
+                                if (i == 0){
+                                    usersChain.get(usersChain.size() - 1).setRepliedLast(false);
+                                } else {
+                                    usersChain.get(i - 1).setRepliedLast(false);
+                                }
+                                saveState(word, currentUser);
+                            }
+                        }
+                    }
+                    // Restart loop
+                    if (i == usersChain.size() - 1) {
+                        i = -1;
+                    }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("GAME RESTORED!");
 
-
         }
 
 
+    }
+
+    private static void saveState(String word, User currentUser) {
+        isResponseOk = true;
+        state.getAlreadyUsedWords().add(word);
+        currentUser.setRepliedLast(true);
+        StateHelper.saveState(state);
     }
 }

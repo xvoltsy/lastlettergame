@@ -1,5 +1,6 @@
 package com.globallogic.training.helper;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +11,10 @@ public class ConsoleHelper {
         System.out.println(message);
     }
 
-    public static String readWord() {
+    public static String readMessage() throws IOException {
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            br = new BufferedReader(new InputStreamReader(System.in));
             return br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
