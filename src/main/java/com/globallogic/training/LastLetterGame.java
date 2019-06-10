@@ -21,14 +21,12 @@ public class LastLetterGame {
     private static State state;
 
     public static void main(String[] args) {
-        System.out.println("GAME STARTED!");
-        System.out.println();
-        System.out.println("Please select Language of the game: EN or RU ?");
-
         state = StateHelper.fetchState();
-
-
         if (state == null) {
+            System.out.println("GAME STARTED!");
+            System.out.println();
+            System.out.println("Please select Language of the game: EN or RU ?");
+
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             try {
                 boolean isLanguageCorrect = false;
@@ -65,7 +63,7 @@ public class LastLetterGame {
                 usersChain.add(bot);
 
                 String word = "";
-                String previousWord = "";
+                String previousWord;
                 LinkedHashSet<String> alreadyUsedWords = state.getAlreadyUsedWords();
 
 
@@ -113,8 +111,6 @@ public class LastLetterGame {
             System.out.println("GAME RESTORED!");
 
         }
-
-
     }
 
     private static void saveState(String word, User currentUser) {
