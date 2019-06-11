@@ -3,7 +3,6 @@ package com.globallogic.training.users;
 import com.globallogic.training.helper.ConsoleHelper;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 public class UserImpl implements User {
 

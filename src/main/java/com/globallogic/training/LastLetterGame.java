@@ -67,14 +67,14 @@ public class LastLetterGame {
                 LinkedHashSet<String> alreadyUsedWords = state.getAlreadyUsedWords();
 
 
-                for (int i = 0; i < usersChain.size(); i++) {
+                for (int order = 0; order < usersChain.size(); order++) {
                     isResponseOk = false;
-                    User currentUser = usersChain.get(i);
+                    User currentUser = usersChain.get(order);
                     while (!isResponseOk) {
                         if (alreadyUsedWords.isEmpty()) {
                             word = currentUser.respond("");
                             if (currentUser.isResponseCorrect(word)) {
-                                saveState(word, currentUser);
+                                saveState(word, currentUser, order);
                             } else {
                                 ConsoleHelper.writeMessage("The word is not correct. Please try again!");
                             }
@@ -90,18 +90,18 @@ public class LastLetterGame {
                             if (!validationMessage.isEmpty()) {
                                 ConsoleHelper.writeMessage(validationMessage);
                             } else {
-                                if (i == 0){
+                                if (order == 0){
                                     usersChain.get(usersChain.size() - 1).setRepliedLast(false);
                                 } else {
-                                    usersChain.get(i - 1).setRepliedLast(false);
+                                    usersChain.get(order - 1).setRepliedLast(false);
                                 }
-                                saveState(word, currentUser);
+                                saveState(word, currentUser, order);
                             }
                         }
                     }
-                    // Restart loop
-                    if (i == usersChain.size() - 1) {
-                        i = -1;
+                    // Start next cycle
+                    if (order == usersChain.size() - 1) {
+                        order = -1;
                     }
                 }
             } catch (IOException e) {
@@ -113,7 +113,7 @@ public class LastLetterGame {
         }
     }
 
-    private static void saveState(String word, User currentUser) {
+    private static void saveState(String word, User currentUser, int userOrder) {
         isResponseOk = true;
         state.getAlreadyUsedWords().add(word);
         currentUser.setRepliedLast(true);

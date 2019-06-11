@@ -17,6 +17,7 @@ public class State implements Serializable {
     private LinkedHashSet<String> alreadyUsedWords = new LinkedHashSet<>();
     private Set<String> dictionaryWords = new HashSet<String>();
     private List<User> usersChain = new ArrayList<>();
+    private User lastUser;
 
     public void loadWords(Language language) throws IOException {
         String fileName = language == Language.EN ? "en.txt" : "ru.txt";
@@ -25,6 +26,18 @@ public class State implements Serializable {
         String line;
         while ((line = reader.readLine()) != null) {
             dictionaryWords.add(line);
+        }
+    }
+
+    public int findLastRepliedUserOrderInChain() {
+        return usersChain.indexOf(usersChain.stream().filter(User::isRepliedLast).findFirst().get());
+    }
+
+    public void setLastUser(int order) {
+        if (order == 0){
+            lastUser = usersChain.get(usersChain.size() - 1);
+        } else {
+            lastUser = usersChain.get(order - 1);
         }
     }
 
@@ -58,5 +71,13 @@ public class State implements Serializable {
 
     public void setUsersChain(List<User> usersChain) {
         this.usersChain = usersChain;
+    }
+
+    public User getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(User lastUser) {
+        this.lastUser = lastUser;
     }
 }
