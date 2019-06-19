@@ -19,7 +19,8 @@ public class CommonValidator implements Validator {
         String validation = gameValidation(word, previousWord);
         if (validation.isEmpty()) {
             validation = dictionaryValidation(word);
-        } else if (validation.isEmpty()) {
+        }
+        if (validation.isEmpty()) {
             validation = stateValidation(word);
         }
         return validation;
