@@ -28,6 +28,10 @@ public class GameRunner {
         List<User> usersChain = state.getUsersChain();
         LinkedHashSet<String> alreadyUsedWords = state.getAlreadyUsedWords();
 
+        if (!alreadyUsedWords.isEmpty()) {
+            previousWord = (String) alreadyUsedWords.toArray()[alreadyUsedWords.size() - 1];
+            ConsoleHelper.writeMessage("Previous word was - " + previousWord + ".");
+        }
         int order = 0;
         if (usersChain.stream().anyMatch(User::isRepliedLast)) {
             order = usersChain.indexOf(usersChain.stream().filter(User::isRepliedLast).findFirst().get());

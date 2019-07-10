@@ -10,12 +10,7 @@ public class UserImpl implements User {
 
     @Override
     public String respond(String previousWord) {
-        try {
-            return ConsoleHelper.readMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return ConsoleHelper.readMessage();
     }
 
     @Override

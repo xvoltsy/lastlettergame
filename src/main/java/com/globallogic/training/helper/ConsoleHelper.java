@@ -11,7 +11,7 @@ public class ConsoleHelper {
         System.out.println(message);
     }
 
-    public static String readMessage() throws IOException {
+    public static String readMessage() {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(System.in));
