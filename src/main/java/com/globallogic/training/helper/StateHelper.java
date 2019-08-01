@@ -18,9 +18,9 @@ public class StateHelper {
             o.flush();
             o.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            ConsoleHelper.writeMessage("File not found!");
         } catch (IOException e) {
-            System.out.println("Error initializing stream");
+            ConsoleHelper.writeMessage("Error initializing stream!");
         }
     }
 
@@ -38,9 +38,9 @@ public class StateHelper {
                 return state;
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            ConsoleHelper.writeMessage("File not found!");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error initializing stream");
+            ConsoleHelper.writeMessage("Error initializing stream!");
         }
         return null;
     }

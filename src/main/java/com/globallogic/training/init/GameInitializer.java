@@ -33,13 +33,13 @@ public class GameInitializer {
                 } else if ("RU".equalsIgnoreCase(language)) {
                     LANGUAGE = Language.RU;
                 } else {
-                    System.out.println("You have entered incorrect language abbreviation. Please input EN of RU in any case!");
+                    ConsoleHelper.writeMessage("You have entered incorrect language abbreviation. Please input EN of RU in any case!");
                 }
             }
             if (LANGUAGE == Language.EN) {
-                System.out.println("Thank you! Please enter first word to start play!");
+                ConsoleHelper.writeMessage("Thank you! Please enter first word to start play!");
             } else {
-                System.out.println("Спасибо! Пожалуйста, введите первое слово, чтобы начать игру!");
+                ConsoleHelper.writeMessage("Спасибо! Пожалуйста, введите первое слово, чтобы начать игру!");
             }
             state.setLanguage(LANGUAGE);
         }
@@ -48,7 +48,7 @@ public class GameInitializer {
         }
     }
 
-    public State init() throws IOException {
+    public State init() {
         this.state = new State();
 
         User user = new UserImpl();
