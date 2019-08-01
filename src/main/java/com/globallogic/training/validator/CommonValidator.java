@@ -34,6 +34,7 @@ public class CommonValidator implements Validator {
     }
 
     private String dictionaryValidation(String word) {
+        
         return !state.getDictionaryWords().contains(word) ? "Wrong word. It doesn't exist in the dictionary!" : Consts.EMPTY;
     }
 
