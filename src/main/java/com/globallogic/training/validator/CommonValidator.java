@@ -23,8 +23,6 @@ public class CommonValidator implements Validator {
         if (validation.isEmpty()) {
             validation = stateValidation(word);
         }
-
-
         return validation;
     }
 
